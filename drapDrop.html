@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        #drop-area {
+            border: 2px dashed #ccc;
+            width: 300px;
+            height: 200px;
+            text-align: center;
+            padding: 10px;
+            margin: 10px auto;
+            transition: background-color 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        #drop-area:hover {
+            background-color: #eee;
+        }
+
+        #image-preview {
+            margin: 10px auto;
+            max-width: 100%;
+            max-height: 200px;
+            display: none;
+        }
+
+        .fileTxt.upload {
+            text-align: left;
+            position: relative;
+            text-indent: 40px;
+        }
+
+        .fileTxt.upload::before {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background-color: #ff0000;
+            border: 1px solid #ff0000;
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="drop-area">
+            <p class="fileTxt">이미지를 드래그 앤 드롭 하거나 클릭하여 업로드하세요.</p>
+            <input type="file" id="file-input" style="display: none;">
+        </div>
+        <img id="image-preview" src="" alt="업로드된 이미지">
+    </div>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+        const dropArea = document.getElementById("drop-area");
+        const fileInput = document.getElementById("file-input");
+        const imagePreview = document.getElementById("image-preview");
+
+        // 드래그 앤 드롭 이벤트 처리
+        dropArea.addEventListener("dragover", (e) => {
+            e.preventDefault();
+            dropArea.style.backgroundColor = "#eee";
+        });
+
+        dropArea.addEventListener("dragleave", () => {
+            dropArea.style.backgroundColor = "#fff";
+        });
+
+        dropArea.addEventListener("drop", (e) => {
+            e.preventDefault();
+            dropArea.style.backgroundColor = "#fff";
+            const file = e.dataTransfer.files[0];
+            // if (file && file.type.startsWith("image")) {
+            //    displayImage(file);
+            // }
+            
+            console.log(file);
+            if (file.name) {
+                $(".fileTxt").text(file.name.split('/').pop().split('\\').pop());
+                $(".fileTxt").addClass("upload");
+            }
+        });
+
+        // 파일 입력 필드 변경 이벤트 처리
+        fileInput.addEventListener("change", () => {
+            const file = fileInput.files[0];
+            // if (file && file.type.startsWith("image")) {
+            //    displayImage(file);
+            // }
+            console.log(file)
+            if (fileInput.value) {
+                $(".fileTxt").text(fileInput.value.split('/').pop().split('\\').pop());
+                $(".fileTxt").addClass("upload");
+            }
+        });
+        // 클릭 이벤트 처리
+        dropArea.addEventListener("click", () => {
+            fileInput.click();
+        });
+        // 이미지 표시 함수
+        function displayImage(file) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                imagePreview.src = reader.result;
+                imagePreview.style.display = "block";
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function isValid(data) {
+
+            //파일인지 유효성 검사
+            if (data.types.indexOf('Files') < 0)
+                return false;
+
+            //이미지인지 유효성 검사
+            if (data.files[0].type.indexOf('image') < 0) {
+                alert('이미지 파일만 업로드 가능합니다.');
+                return false;
+            }
+
+            //파일의 개수는 1개씩만 가능하도록 유효성 검사
+            if (data.files.length > 1) {
+                alert('파일은 하나씩 전송이 가능합니다.');
+                return false;
+            }
+
+
+            if (data.files[0].size >= 1024 * 1024 * 1024 * 5) {
+                alert('5GB 이상인 파일은 업로드할 수 없습니다.');
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+
+</html>

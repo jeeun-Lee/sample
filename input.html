@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+
+
+    <title>sample</title>
+</head>
+
+
+<body>
+    <form action="">
+        <input type="text" name="name" id="inputId" maxlength="30" />
+        
+        <span style="margin-right:5px;">전화번호 입력 : </span>
+        <input type="text" name="brn" id="brn">
+        <p id="checkBrnMessage"></p>
+
+
+
+        <input type="email" placeholder="이메일" name="mail" id="mail" maxlength="30">
+<div id="error_mail" class="result-email result-check"></div>
+
+
+        <input type="submit" value="전송">
+
+
+
+
+    </form>
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script>
+    
+        // 입력을 제한 할 특수문자의 정규식
+        var replaceId  =/[ \{\}\[\]\/?.,;:|\)*~`!^\_+┼<>@\#$%&\'\"\\\(\=]/gi; 
+        
+        $(document).ready(function(){
+            
+            $("#inputId").on("focus keyup", function() {
+                var x = $(this).val();
+                if (x.length > 0) {
+                    if (x.match(replaceId)) {
+                       x = x.replace(replaceId, "");
+                    }
+                    $(this).val(x);
+                }
+            }).on("keyup", function() {
+                $(this).val($(this).val().replace(replaceId, ""));
+    
+            });
+    
+        });
+        $("input[type='submit']").click(function() {   
+            if($('input[name="name"]').val() == ''){
+                alert('이름은 필수 입력입니다.');
+                $('input[name="name"]').val('');
+                $('input[name="name"]').focus();
+                return false;
+            }
+        })
+    </script>
+
+    
+    <script>
+        $( '#brn' ).on( 'focus keyup', function() {
+          var brn = document.getElementById( "brn" ).value;
+          if ( /^010-[0-9]{4}-[0-9]{4}$/.test( brn ) ) {
+            document.getElementById( "checkBrnMessage" ).innerText = "OK";
+          } else {
+            document.getElementById( "checkBrnMessage" ).innerText = "NOT OK";
+          }
+        } );
+      </script>
+    
+    <script>
+        function email_check( email ) {    
+            var regex=/([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+            return (email != '' && email != 'undefined' && regex.test(email)); 
+        }
+
+        $("input[type=email]").blur(function(){
+        var email = $(this).val();
+        if( email == '' || email == 'undefined') return;
+        if(! email_check(email) ) {
+            $(".result-email").text('이메일 형식으로 적어주세요');
+            $(this).focus();
+            return false;
+        }else {
+            $(".result-email").text('');
+        }
+        });
+    </script>
+</body>
+
+</html>

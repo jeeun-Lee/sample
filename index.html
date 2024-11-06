@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang='ko'>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/swiper.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" href="./css/aos.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/main.css">
+
+    <title>sample</title>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            
+        </header>
+        <section class="main">
+            <div class="main-slide">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide one">
+                        <h1>main1</h1>
+                    </div>
+                    <div class="swiper-slide one">
+                        <h1>main2</h1>
+                    </div>
+                    <div class="swiper-slide one">
+                        <h1>main3</h1>
+                    </div>
+                </div>
+                <div class="main-pagin"></div>
+            </div>
+        </section>
+        <section class="content01">
+            <div class="wrap-1440">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi temporibus earum repellat in aspernatur fuga tenetur accusantium eaque doloremque quo dolorum corrupti adipisci praesentium expedita magni eos illum, nesciunt ratione?
+            </div>
+        </section>
+    
+        <div id="modal"></div>
+        <footer>
+    
+        </footer>
+    </div>
+   
+   
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="./js/aos.js"></script>
+    <script src="./js/aosR.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+         var menu = ['main1', 'main2', 'main3'];
+         var w= $(window).width();
+         if(w<=1210){
+            for (let inx = 0; inx < menu.length; inx++) {
+               menu[inx] = menu[inx].replace(/\_/g,'')
+            }
+         }
+         $(window).resize(function(){
+            var w= $(window).width();
+            if(w<=1210){
+                for (let inx = 0; inx < menu.length; inx++) {
+                    $('.main .main-pagin .swiper-pagination-bullet').eq(inx).text($('.main .main-pagin .swiper-pagination-bullet').eq(inx).text().replace(/\_/g,''))   
+                    }
+            }
+         })
+        var main_swiper = new Swiper(".main-slide", {
+                
+            pagination: {
+            el: ".main-pagin",
+            clickable: true,
+            
+            renderBullet: function (index, className) {
+                return '<div class="' + className + '">'+ menu[index] +'</div>';
+            },
+            },
+            speed: 1000,
+            loop:true,
+            loopAdditionalSlides : 1,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false
+            },
+        });
+       
+        $(".pause").click(function () {
+            $('.pause').toggleClass('active');
+            if ($(this).hasClass('active')) {
+                $('.pause').removeClass('xi-pause')
+                $('.pause').addClass('xi-play')
+                contetnt05_sub.autoplay.stop();
+            } else {
+                contetnt05_sub.autoplay.start();
+                $('.pause').removeClass('xi-play')
+                $('.pause').addClass('xi-pause')
+            }
+        });
+
+    </script>
+</body>
+
+</html>
