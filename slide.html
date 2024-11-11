@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/swiper.min.css">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/xeicon@2.3.3/xeicon.min.css">
+    <link rel="stylesheet" href="./css/aos.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/main.css">
+
+    <title>sample</title>
+
+    <style>
+        .main-slider, .thumbnail-slider {
+            width: 100%;
+            margin: 20px auto;
+        }
+
+        .thumbnail-slider .swiper-slide {
+            width: 80px;
+            height: 80px;
+            opacity: 0.3;
+        }
+
+        .thumbnail-slider .swiper-slide.active {
+            opacity: 1;
+        }
+
+        .thumbnail-slider .swiper-slide img {
+            display: block;
+            max-width: 100%;
+        }
+
+        /* 반응형 디자인 */
+        @media (max-width: 768px) {
+            .thumbnail-slider .swiper-slide {
+                width: 60px; /* 모바일에서 썸네일 크기 조정 */
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 메인 슬라이더 -->
+    <div class="main-slider swiper-container">
+        <div class="swiper-button-next swiper-button-white"></div>
+        <div class="swiper-button-prev swiper-button-white"></div>
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-1.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-1.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-1.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" /></div>
+            <!-- 추가 슬라이드 -->
+        </div>
+    </div>
+
+    <!-- 썸네일 슬라이더 -->
+    <div class="thumbnail-slider swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-1.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-1.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-1.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-2.jpg" /></div>
+            <div class="swiper-slide">
+                <img src="https://swiperjs.com/demos/images/nature-3.jpg" /></div>
+            <!-- 추가 썸네일 -->
+        </div>
+    </div>
+
+    <script src="./js/jquery-1.12.4.min.js"></script>
+    <script src="./js/popper.min.js"></script>
+    <script src="./js/swiper.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
+    <script src="./js/common.js"></script>
+    <script src="./js/aos.js"></script>
+    <script src="./js/aosR.js"></script>
+    <script src="./js/main.js"></script>
+
+    <script>
+        // 썸네일 슬라이더 초기화
+        const thumbnailSlider = new Swiper('.thumbnail-slider', {
+            loop: false,
+            slidesPerView: 'auto',
+            spaceBetween: 10,
+            centeredSlides: false,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            slideToClickedSlide: true, // 썸네일 클릭 시 슬라이드 이동
+            breakpoints: {
+                768: {
+                    slidesPerView: 4, // 모바일 화면에서 썸네일 개수 줄이기
+                    spaceBetween: 5,  // 간격 좁히기
+                },
+                1024: {
+                    slidesPerView: 6, // 태블릿에서 썸네일 개수
+                    spaceBetween: 10,
+                }
+            }
+        });
+
+          // 메인 슬라이더 초기화
+          const mainSlider = new Swiper('.main-slider', {
+            loop: false,
+            centeredSlides: true,
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            thumbs: {
+                swiper: thumbnailSlider, // 메인 슬라이더와 썸네일 슬라이더 동기화
+            },
+            on: {
+                slideChange: function () {
+                    const activeIndex = this.realIndex;
+                    const thumbnailSlides = $('.thumbnail-slider .swiper-slide');
+                    thumbnailSlides.removeClass('active');
+                    thumbnailSlides.eq(activeIndex).addClass('active');
+                },
+                beforeSlideChangeStart: function () {
+                    const thumbnailSlides = $('.thumbnail-slider .swiper-slide');
+                    thumbnailSlides.eq(0).addClass('active');
+                }
+            }
+        });
+        // 썸네일 클릭 시 썸네일 슬라이드를 첫 번째로 이동
+        $('.thumbnail-slider .swiper-slide').on('click', function () {
+            const clickedIndex = $(this).index();  // 클릭된 썸네일의 인덱스
+
+            // 썸네일 슬라이드 이동 및 메인 슬라이드 전환
+            thumbnailSlider.slideTo(clickedIndex);  // 클릭된 썸네일을 왼쪽 끝으로 이동
+            mainSlider.slideTo(clickedIndex);          // 메인 슬라이드를 클릭된 썸네일에 맞춰 이동
+
+            // 썸네일 활성화 클래스 즉시 반영
+            const thumbnailSlides = $('.thumbnail-slider .swiper-slide');
+            thumbnailSlides.removeClass('active');
+            thumbnailSlides.eq(clickedIndex).addClass('active');
+        });
+    </script>
+
+</body>
+
+</html>
